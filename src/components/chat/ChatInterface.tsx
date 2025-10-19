@@ -25,6 +25,11 @@ export default function ChatInterface() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const selectedChat = chats.find(chat => chat.id.toString() === selectedChatId);
+  
+  // Add null check for selectedChat
+  if (selectedChatId && !selectedChat) {
+    console.warn('Selected chat not found:', selectedChatId);
+  }
 
   // Mock data for demonstration
   useEffect(() => {

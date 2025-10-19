@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Search, X, MessageCircle, Users, Hash, Calendar, Filter } from 'lucide-react';
 import { Chat, Message } from '@/types';
 
@@ -84,7 +84,7 @@ export default function SearchModal({ isOpen, onClose, onChatSelect, onMessageSe
     }
   }, [query, activeFilter, dateFilter]);
 
-  const performSearch = async () => {
+  const performSearch = useCallback(async () => {
     setIsLoading(true);
     
     // Simulate API delay
@@ -126,7 +126,7 @@ export default function SearchModal({ isOpen, onClose, onChatSelect, onMessageSe
     filteredResults.sort((a, b) => a.relevance - b.relevance);
     setResults(filteredResults);
     setIsLoading(false);
-  };
+  }, [query, activeFilter, dateFilter]);
 
   const isDateInRange = (date: Date): boolean => {
     const now = new Date();

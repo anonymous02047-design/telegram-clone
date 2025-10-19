@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { 
   Phone, 
   PhoneOff, 
@@ -62,7 +62,7 @@ export default function VideoCallModal({
     return () => clearInterval(interval);
   }, [isConnected]);
 
-  const startCall = async () => {
+  const startCall = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: callType === 'video',
@@ -95,7 +95,7 @@ export default function VideoCallModal({
     } catch (error) {
       console.error('Error starting call:', error);
     }
-  };
+  }, [callType]);
 
   const handleAnswer = () => {
     startCall();

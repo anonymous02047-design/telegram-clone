@@ -322,10 +322,12 @@ export function TelegramAuthProvider({ children }: TelegramAuthProviderProps) {
     
     try {
       // Convert File to Buffer if needed
-      let photoData: string | Buffer = photo;
+      let photoData: string | Buffer;
       if (photo instanceof File) {
         const arrayBuffer = await photo.arrayBuffer();
         photoData = Buffer.from(arrayBuffer);
+      } else {
+        photoData = photo; // photo is already a string
       }
       
       const message = await telegramApi.sendPhoto(parseInt(chatId), photoData, options);
@@ -350,10 +352,12 @@ export function TelegramAuthProvider({ children }: TelegramAuthProviderProps) {
     
     try {
       // Convert File to Buffer if needed
-      let documentData: string | Buffer = document;
+      let documentData: string | Buffer;
       if (document instanceof File) {
         const arrayBuffer = await document.arrayBuffer();
         documentData = Buffer.from(arrayBuffer);
+      } else {
+        documentData = document; // document is already a string
       }
       
       const message = await telegramApi.sendDocument(parseInt(chatId), documentData, options);
@@ -377,7 +381,16 @@ export function TelegramAuthProvider({ children }: TelegramAuthProviderProps) {
     if (!user) throw new Error('User not authenticated');
     
     try {
-      const message = await telegramApi.sendVoice(parseInt(chatId), voice, options);
+      // Convert File/Blob to Buffer if needed
+      let voiceData: string | Buffer;
+      if (voice instanceof File || voice instanceof Blob) {
+        const arrayBuffer = await voice.arrayBuffer();
+        voiceData = Buffer.from(arrayBuffer);
+      } else {
+        voiceData = voice; // voice is already a string
+      }
+      
+      const message = await telegramApi.sendVoice(parseInt(chatId), voiceData, options);
       
       // Add message to local state
       setMessages(prev => ({
@@ -399,10 +412,12 @@ export function TelegramAuthProvider({ children }: TelegramAuthProviderProps) {
     
     try {
       // Convert File to Buffer if needed
-      let videoData: string | Buffer = video;
+      let videoData: string | Buffer;
       if (video instanceof File) {
         const arrayBuffer = await video.arrayBuffer();
         videoData = Buffer.from(arrayBuffer);
+      } else {
+        videoData = video; // video is already a string
       }
       
       const message = await telegramApi.sendVideo(parseInt(chatId), videoData, options);

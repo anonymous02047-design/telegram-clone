@@ -647,7 +647,22 @@ class TelegramApiService {
   ): Promise<TelegramMessage> {
     const formData = new FormData();
     formData.append('chat_id', chatId.toString());
-    formData.append('photo', photo);
+    
+    // Convert Buffer to Blob if needed
+    if (photo instanceof Buffer) {
+      const blob = new Blob([new Uint8Array(photo)]);
+      formData.append('photo', blob);
+    } else if (typeof photo === 'string') {
+      formData.append('photo', photo);
+    } else if (photo instanceof File) {
+      formData.append('photo', photo);
+    } else if (photo instanceof Blob) {
+      formData.append('photo', photo);
+    } else {
+      // Handle other types by converting to Blob
+      const blob = new Blob([photo as unknown as BlobPart]);
+      formData.append('photo', blob);
+    }
     
     if (options?.caption) formData.append('caption', options.caption);
     if (options?.parse_mode) formData.append('parse_mode', options.parse_mode);
@@ -683,7 +698,22 @@ class TelegramApiService {
   ): Promise<TelegramMessage> {
     const formData = new FormData();
     formData.append('chat_id', chatId.toString());
-    formData.append('document', document);
+    
+    // Convert Buffer to Blob if needed
+    if (document instanceof Buffer) {
+      const blob = new Blob([new Uint8Array(document)]);
+      formData.append('document', blob);
+    } else if (typeof document === 'string') {
+      formData.append('document', document);
+    } else if (document instanceof File) {
+      formData.append('document', document);
+    } else if (document instanceof Blob) {
+      formData.append('document', document);
+    } else {
+      // Handle other types by converting to Blob
+      const blob = new Blob([document as unknown as BlobPart]);
+      formData.append('document', blob);
+    }
     
     if (options?.caption) formData.append('caption', options.caption);
     if (options?.parse_mode) formData.append('parse_mode', options.parse_mode);
@@ -720,7 +750,22 @@ class TelegramApiService {
   ): Promise<TelegramMessage> {
     const formData = new FormData();
     formData.append('chat_id', chatId.toString());
-    formData.append('voice', voice);
+    
+    // Convert Buffer to Blob if needed
+    if (voice instanceof Buffer) {
+      const blob = new Blob([new Uint8Array(voice)]);
+      formData.append('voice', blob);
+    } else if (typeof voice === 'string') {
+      formData.append('voice', voice);
+    } else if (voice instanceof File) {
+      formData.append('voice', voice);
+    } else if (voice instanceof Blob) {
+      formData.append('voice', voice);
+    } else {
+      // Handle other types by converting to Blob
+      const blob = new Blob([voice as unknown as BlobPart]);
+      formData.append('voice', blob);
+    }
     
     if (options?.caption) formData.append('caption', options.caption);
     if (options?.parse_mode) formData.append('parse_mode', options.parse_mode);
@@ -761,12 +806,38 @@ class TelegramApiService {
   ): Promise<TelegramMessage> {
     const formData = new FormData();
     formData.append('chat_id', chatId.toString());
-    formData.append('video', video);
+    
+    // Convert Buffer to Blob if needed
+    if (video instanceof Buffer) {
+      const blob = new Blob([new Uint8Array(video)]);
+      formData.append('video', blob);
+    } else if (typeof video === 'string') {
+      formData.append('video', video);
+    } else if (video instanceof File) {
+      formData.append('video', video);
+    } else if (video instanceof Blob) {
+      formData.append('video', video);
+    } else {
+      // Handle other types by converting to Blob
+      const blob = new Blob([video as unknown as BlobPart]);
+      formData.append('video', blob);
+    }
     
     if (options?.duration) formData.append('duration', options.duration.toString());
     if (options?.width) formData.append('width', options.width.toString());
     if (options?.height) formData.append('height', options.height.toString());
-    if (options?.thumbnail) formData.append('thumbnail', options.thumbnail);
+    if (options?.thumbnail) {
+      if (options.thumbnail instanceof Buffer) {
+        const blob = new Blob([new Uint8Array(options.thumbnail)]);
+        formData.append('thumbnail', blob);
+      } else if (typeof options.thumbnail === 'string') {
+        formData.append('thumbnail', options.thumbnail);
+      } else {
+        // Handle other types by converting to Blob
+        const blob = new Blob([options.thumbnail as unknown as BlobPart]);
+        formData.append('thumbnail', blob);
+      }
+    }
     if (options?.caption) formData.append('caption', options.caption);
     if (options?.parse_mode) formData.append('parse_mode', options.parse_mode);
     if (options?.supports_streaming) formData.append('supports_streaming', options.supports_streaming.toString());

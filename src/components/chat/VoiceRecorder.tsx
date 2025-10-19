@@ -29,8 +29,11 @@ export default function VoiceRecorder({ onSendVoiceMessage, onCancel }: VoiceRec
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
+      if (audioUrl) {
+        URL.revokeObjectURL(audioUrl);
+      }
     };
-  }, []);
+  }, [audioUrl]);
 
   const startRecording = async () => {
     try {

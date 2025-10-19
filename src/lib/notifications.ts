@@ -63,7 +63,6 @@ class NotificationService {
         badge: data.badge || '/badge-72x72.png',
         tag: data.tag,
         data: data.data,
-        actions: data.actions,
         requireInteraction: true,
         silent: false,
       });

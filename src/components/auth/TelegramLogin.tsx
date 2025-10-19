@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTelegramAuth } from '@/contexts/TelegramAuthContext';
 import { telegramWebApp } from '@/lib/telegram-webapp';
 import { Loader2, Smartphone, Globe, AlertCircle, CheckCircle } from 'lucide-react';
@@ -36,7 +36,7 @@ export default function TelegramLogin({ onSuccess, onError }: TelegramLoginProps
     return () => clearTimeout(timer);
   }, []);
 
-  const handleTelegramLogin = async () => {
+  const handleTelegramLogin = useCallback(async () => {
     try {
       if (!telegramWebApp.isAvailable) {
         throw new Error('Telegram WebApp is not available');
@@ -54,7 +54,7 @@ export default function TelegramLogin({ onSuccess, onError }: TelegramLoginProps
       console.error('Telegram login error:', error);
       onError?.(errorMessage);
     }
-  };
+  }, [login, onSuccess, onError]);
 
   const handleDevelopmentLogin = async () => {
     try {
