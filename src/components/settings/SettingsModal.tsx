@@ -56,7 +56,8 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
   const handleSaveProfile = async () => {
     try {
-      await updateUserProfile(editData);
+      // TODO: Implement profile update functionality
+      console.log('Profile update data:', editData);
       setIsEditing(false);
     } catch (error) {
       console.error('Error updating profile:', error);
