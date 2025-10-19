@@ -27,9 +27,9 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const [activeTab, setActiveTab] = useState('profile');
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
-    displayName: user?.displayName || '',
+    displayName: user?.first_name || '',
     username: user?.username || '',
-    phoneNumber: user?.phoneNumber || '',
+    phoneNumber: '',
   });
   const [notifications, setNotifications] = useState({
     messages: true,
@@ -144,7 +144,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 <div className="relative">
                   <div className="w-24 h-24 bg-blue-500 rounded-full flex items-center justify-center">
                     <span className="text-2xl font-medium text-white">
-                      {user?.displayName?.charAt(0).toUpperCase() || 'U'}
+                      {user?.first_name?.charAt(0).toUpperCase() || 'U'}
                     </span>
                   </div>
                   {isEditing && (
@@ -168,7 +168,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         />
                       ) : (
-                        <p className="text-gray-900 dark:text-white">{user?.displayName}</p>
+                        <p className="text-gray-900 dark:text-white">{user?.first_name}</p>
                       )}
                     </div>
                     
@@ -207,7 +207,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         />
                       ) : (
-                        <p className="text-gray-900 dark:text-white">{user?.phoneNumber || 'Not set'}</p>
+                        <p className="text-gray-900 dark:text-white">Not set</p>
                       )}
                     </div>
                   </div>
