@@ -212,7 +212,7 @@ export default function UserProfileModal({ isOpen, onClose }: UserProfileModalPr
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Email
                       </label>
-                      <p className="text-gray-900 dark:text-white">{user.email}</p>
+                      <p className="text-gray-900 dark:text-white">{user.username || 'Not available'}</p>
                     </div>
                     
                     <div>
