@@ -321,7 +321,14 @@ export function TelegramAuthProvider({ children }: TelegramAuthProviderProps) {
     if (!user) throw new Error('User not authenticated');
     
     try {
-      const message = await telegramApi.sendPhoto(parseInt(chatId), photo, options);
+      // Convert File to Buffer if needed
+      let photoData: string | Buffer = photo;
+      if (photo instanceof File) {
+        const arrayBuffer = await photo.arrayBuffer();
+        photoData = Buffer.from(arrayBuffer);
+      }
+      
+      const message = await telegramApi.sendPhoto(parseInt(chatId), photoData, options);
       
       // Add message to local state
       setMessages(prev => ({
@@ -342,7 +349,14 @@ export function TelegramAuthProvider({ children }: TelegramAuthProviderProps) {
     if (!user) throw new Error('User not authenticated');
     
     try {
-      const message = await telegramApi.sendDocument(parseInt(chatId), document, options);
+      // Convert File to Buffer if needed
+      let documentData: string | Buffer = document;
+      if (document instanceof File) {
+        const arrayBuffer = await document.arrayBuffer();
+        documentData = Buffer.from(arrayBuffer);
+      }
+      
+      const message = await telegramApi.sendDocument(parseInt(chatId), documentData, options);
       
       // Add message to local state
       setMessages(prev => ({
@@ -384,7 +398,14 @@ export function TelegramAuthProvider({ children }: TelegramAuthProviderProps) {
     if (!user) throw new Error('User not authenticated');
     
     try {
-      const message = await telegramApi.sendVideo(parseInt(chatId), video, options);
+      // Convert File to Buffer if needed
+      let videoData: string | Buffer = video;
+      if (video instanceof File) {
+        const arrayBuffer = await video.arrayBuffer();
+        videoData = Buffer.from(arrayBuffer);
+      }
+      
+      const message = await telegramApi.sendVideo(parseInt(chatId), videoData, options);
       
       // Add message to local state
       setMessages(prev => ({
